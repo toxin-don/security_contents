@@ -3,7 +3,7 @@ title: "GlassWorm攻撃の不可視コードをOpenGrepで検出する"
 emoji: "🔍"
 type: "tech"
 topics: ["security", "unicode", "supplychainattack", "codereview", "oss"]
-published: false
+published: true
 ---
 
 ## はじめに
