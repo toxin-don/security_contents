@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "preset-ja-technical-writing": {
+      "sentence-length": { "max": 90 },
+      "max-comma": { "max": 3 },
+      "max-ten": { "max": 3 },
+      "no-exclamation-question-mark": false,
+      "ja-no-weak-phrase": true,
+      "ja-no-redundant-expression": true,
+      "no-doubled-joshi": { "strict": false }
+    },
+    "prh": {
+      "rulePaths": ["./prh-zenn.yml"]
+    }
+  }
+}
