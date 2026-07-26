@@ -3,7 +3,7 @@ title: "同じテスト計画からClaude CodeとCodexにE2Eテストを生成�
 emoji: "🎭"
 type: "tech"
 topics: ["playwright", "claudecode", "codex", "e2e"]
-published: true
+published: false
 ---
 
 ## 経緯
