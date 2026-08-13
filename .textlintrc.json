@@ -1,4 +1,5 @@
 {
+  "_comment": "プロファイル: zenn（Zenn記事）。設定なしで npx textlint を叩いたときもこれが使われる。他は .textlintrc.common.json / .textlintrc.resume.json",
   "rules": {
     "preset-ja-technical-writing": {
       "sentence-length": { "max": 90 },
@@ -10,7 +11,7 @@
       "no-doubled-joshi": { "strict": false }
     },
     "prh": {
-      "rulePaths": ["./prh-zenn.yml"]
+      "rulePaths": ["./prh-common.yml", "./prh-zenn.yml"]
     }
   }
 }

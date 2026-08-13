@@ -1,30 +1,10 @@
 version: 1
-# AI型フレーズの禁止辞書（2026-07-27 比較記事の反省から作成。見つけたら随時追加する）
+# Zenn記事だけに当てる辞書。全文書共通のものは prh-common.yml にある
+# 2026-08-13 分割。記事以外（職務経歴書・ノート・メール）では誤検出になるものをここに置く
 rules:
-  - expected: 結論。
-    pattern: 結論を先に書くと
-    prh: AIの手癖。結論はフレーズなしで直接書く
-  - expected: 実は
-    pattern: 種明かしをすると
-    prh: AIの手癖
-  - expected: 言いたいのは
-    pattern: /持ち帰りたい(結論|の)?/
-    prh: AIの手癖
-  - expected: （削除する）
-    pattern: いかがでしたか
-    prh: AI slopの代表格
   - expected: （削除する）
     pattern: /本記事では/
     prh: 前置き不要。いきなり本題に入る
-  - expected: だ
-    pattern: /と言えるでしょう/
-    prh: ぼかし表現。断定するか数字で示す
-  - expected: （言い切る）
-    pattern: /ではないでしょうか[。]/
-    prh: 読者への丸投げ。自分の判断を書く
-  - expected: 特筆もの（自分の言葉に置換）
-    pattern: /特筆ものでした/
-    prh: AIの手癖
   - expected: （削除するか自分の言葉で）
     pattern: /面白かったのは/
     prh: 頻出しすぎ注意。1記事1回まで

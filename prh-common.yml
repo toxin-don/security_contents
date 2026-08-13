@@ -1,0 +1,76 @@
+version: 1
+# 全文書共通のAI型フレーズ辞書
+# 対象: Zenn記事 / ノート / 提出フォーム / メール文面 / 職務経歴書・履歴書
+# 出典: memory/feedback_ai_smell.md（本人が実際に指摘した語のみを入れる）
+# 2026-08-13 prh-zenn.yml から分割。Zenn記事固有のものは prh-zenn.yml に残した
+#
+# 追加の基準: 本人が「AIくさい」と指摘した実例があること。
+# 一般論で「AIが使いがちな語」を推測で足さない（誤検出が増えて運用が死ぬ）
+rules:
+  # --- AIの手癖（構文レベル） ---
+  - expected: 結論。
+    pattern: 結論を先に書くと
+    prh: AIの手癖。結論はフレーズなしで直接書く
+  - expected: 実は
+    pattern: 種明かしをすると
+    prh: AIの手癖
+  - expected: 言いたいのは
+    pattern: /持ち帰りたい(結論|の)?/
+    prh: AIの手癖
+  - expected: （削除する）
+    pattern: いかがでしたか
+    prh: AI slopの代表格
+  - expected: 特筆もの（自分の言葉に置換）
+    pattern: /特筆ものでした/
+    prh: AIの手癖
+
+  # --- ぼかし・丸投げ ---
+  - expected: だ
+    pattern: /と言えるでしょう/
+    prh: ぼかし表現。断定するか数字で示す
+  - expected: （言い切る）
+    pattern: /ではないでしょうか[。]/
+    prh: 読者への丸投げ。自分の判断を書く
+
+  # --- 勢いだけの決まり文句（2026-08-06「現業直撃」の指摘から） ---
+  - expected: （何と何がどう重なるのかを書く）
+    pattern: /(現業|)直撃/
+    prh: 中身がないのに勢いだけある。普通の日本語で書く
+  - expected: （何がどう当てはまるのかを書く）
+    pattern: /に刺さ(る|った|ります)/
+    prh: 勢いだけの語
+  - expected: しっかり
+    pattern: /ガッツリ/
+    prh: 勢いだけの語
+  - expected: （速度を数字で）
+    pattern: /爆速/
+    prh: 勢いだけの語
+  - expected: （数字で示す）
+    pattern: /圧倒的(に|な|)/
+    prh: 空の強調。数字がないなら削る
+  - expected: （削除する）
+    pattern: /まさに/
+    prh: 勢いだけの語。無くても意味が変わらない
+  - expected: （削除する）
+    pattern: /に他ならない/
+    prh: 勢いだけの語
+
+  # --- 比喩ラベル（2026-07-13「北極星とかなんだよ」から。実物を指さない言い換え） ---
+  - expected: 人生の目標
+    pattern: /北極星/
+    prh: 比喩ラベル。実物の名前で呼ぶ
+  - expected: 判断の基準
+    pattern: /羅針盤/
+    prh: 比喩ラベル。実物の名前で呼ぶ
+  - expected: 全社共通の部分 / 会社ごとに変える部分
+    pattern: /幹と枝/
+    prh: 比喩ラベル（2026-08-06 指摘）
+  - expected: 面白そうと感じたか
+    pattern: /腹の判定/
+    prh: 比喩ラベル（2026-07-29 指摘）
+
+  # --- 表記（2026-08-13 Qiita記事から取り込み） ---
+  # https://qiita.com/minorun365/items/699e89544da8b0de300d
+  - expected: （句点で文を分ける）
+    pattern: /——|――/
+    prh: ダッシュ区切りはAI特有。文を分けるか読点にする

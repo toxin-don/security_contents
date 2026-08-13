@@ -1,0 +1,22 @@
+{
+  "_comment": "プロファイル: common（ノート・提出フォーム・メール文面・1on1資料）。zenn との差分は「！」を落とすこと、Zenn固有辞書を読まないこと、漢字連続と記号の繰り返しを外したこと。後者2つは2026-08-13 にベイカレント事前確認シートへ当てて全件ノイズだったため（「育児休業給付金」のような複合語、表の「○○」）",
+  "rules": {
+    "preset-ja-technical-writing": {
+      "sentence-length": { "max": 90 },
+      "max-comma": { "max": 3 },
+      "max-ten": { "max": 3 },
+      "max-kanji-continuous-len": false,
+      "ja-no-successive-word": false,
+      "no-exclamation-question-mark": {
+        "allowFullWidthQuestion": true,
+        "allowHalfWidthQuestion": true
+      },
+      "ja-no-weak-phrase": true,
+      "ja-no-redundant-expression": true,
+      "no-doubled-joshi": { "strict": false }
+    },
+    "prh": {
+      "rulePaths": ["./prh-common.yml"]
+    }
+  }
+}

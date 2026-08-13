@@ -1,0 +1,34 @@
+{
+  "_comment": "プロファイル: resume（職務経歴書・履歴書・マイページ転記シート）。AI臭の検出だけに絞る。文長・漢字連続・助詞・体言止めは職務経歴書では正しい書き方（固有名詞や業務用語が長く、実績は体言止めで並べる）なので外した。2026-08-13 に職務経歴書-draft.md へ当てたところ44件すべてがこの系統のノイズで、AI臭の検出は0件だった",
+  "rules": {
+    "preset-ja-technical-writing": {
+      "sentence-length": false,
+      "max-comma": false,
+      "max-ten": false,
+      "max-kanji-continuous-len": false,
+      "no-doubled-joshi": false,
+      "no-doubled-conjunction": false,
+      "no-doubled-conjunctive-particle-ga": false,
+      "ja-no-successive-word": false,
+      "ja-no-mixed-period": false,
+      "no-mix-dearu-desumasu": false,
+      "no-exclamation-question-mark": {
+        "allowFullWidthQuestion": true,
+        "allowHalfWidthQuestion": true
+      },
+      "ja-no-weak-phrase": true,
+      "ja-no-redundant-expression": true,
+      "ja-no-abusage": true,
+      "no-double-negative-ja": true,
+      "no-dropping-the-ra": true,
+      "no-hankaku-kana": true,
+      "no-zero-width-spaces": true,
+      "no-nfd": true,
+      "ja-unnatural-alphabet": true,
+      "no-unmatched-pair": true
+    },
+    "prh": {
+      "rulePaths": ["./prh-common.yml"]
+    }
+  }
+}
