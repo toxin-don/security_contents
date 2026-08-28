@@ -74,3 +74,39 @@ rules:
   - expected: （句点で文を分ける）
     pattern: /——|――/
     prh: ダッシュ区切りはAI特有。文を分けるか読点にする
+
+  # --- 口語（2026-08-28 SOMPO意向確認回答で本人指摘「口語体すぎる」「lint発動しなかったのかよ」から） ---
+  # 対象は外に出るメール・提出フォーム。書き言葉に置き換える
+  - expected: 対応する
+    pattern: /捌(き|く|い|け)/
+    prh: 口語。「対応する」「処理する」
+  - expected: さまざま
+    pattern: /いろいろ(な|と|)/
+    prh: 口語
+  - expected: （言い切る。「少ない」「ない」）
+    pattern: /なさそう/
+    prh: 口語のぼかし
+  - expected: 魅力に感じる
+    pattern: /とても(良|よ)い/
+    prh: 口語。何が良いのかを書く
+  - expected: （削除する）
+    pattern: /正直(?!に)/
+    prh: 口語。無くても意味が変わらない
+  - expected: かを伺いたいです
+    pattern: /のか知りたい/
+    prh: 口語。「〜かを伺いたい」「〜を教えていただきたい」
+  - expected: 優先度
+    pattern: /温度感/
+    prh: 口語寄りの業界語。「優先度」「方針」
+  - expected: を担当し
+    pattern: /をこなし/
+    prh: 口語
+  - expected: 通勤時間が短い
+    pattern: /通勤が近い/
+    prh: 口語
+  - expected: 大きく
+    pattern: /だいぶ/
+    prh: 口語
+  - expected: 少し
+    pattern: /ちょっと/
+    prh: 口語
