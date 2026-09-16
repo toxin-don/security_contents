@@ -8,3 +8,16 @@ rules:
   - expected: （削除するか自分の言葉で）
     pattern: /面白かったのは/
     prh: 頻出しすぎ注意。1記事1回まで
+  # 2026-09-16 記事規約本文に挙がっていた語を辞書へ。/zenn-review が FAIL を出すたびに1語足す
+  - expected: （削除する）
+    pattern: /この記事では/
+    prh: 前置き不要。いきなり本題に入る
+  - expected: （削除して結論の文だけ残す）
+    pattern: /結論を先に書くと/
+    prh: AI 型の前置き
+  - expected: （削除する）
+    pattern: /種明かしをすると/
+    prh: AI 型の前置き
+  - expected: （削除する）
+    pattern: /いかがでしたか/
+    prh: AI 型の締め

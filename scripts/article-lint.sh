@@ -43,6 +43,7 @@ case "$PROFILE" in
 esac
 
 FAIL=0
+WARN=0
 echo "=== プロファイル: $PROFILE ==="
 echo ""
 
@@ -68,31 +69,56 @@ table_lines = [l for l in prose.splitlines() if l.strip().startswith('|')]
 prose_only = '\n'.join(l for l in prose.splitlines() if not l.strip().startswith('|'))
 
 fail = False
+warn = False
 
 def check(name, val, limit, hint='', warn_only=False):
-    global fail
+    global fail, warn
     over = val > limit
     if over and not warn_only:
         fail = True
+    if over and warn_only:
+        warn = True
     mark = ('WARN' if warn_only else 'OVER') if over else 'OK'
     suffix = f'  … {hint}' if (over and hint) else ''
     print(f'  {name}: {val} / 上限{limit} … {mark}{suffix}')
+
+def check_band(name, val, target, hard, hint=''):
+    """2段の上限（2026-09-16 記事規約）。target 超えは WARN、hard 超えは OVER"""
+    global fail, warn
+    if val > hard:
+        fail = True
+        mark = 'OVER'
+    elif val > target:
+        warn = True
+        mark = f'WARN（{hint}）' if hint else 'WARN'
+    else:
+        mark = 'OK'
+    print(f'  {name}: {val} / 目安{target} / 上限{hard} … {mark}')
 
 # 太字・コロン・体言止めは文書の型によって正解が変わる（フォームの下書きや台帳では
 # 構造化されているのが正しい）。読み物である記事だけ FAIL にし、他は警告に留める。
 # 2026-08-13 ベイカレント事前確認シート（太字62個/見出し18・コロン45%）で確認。
 soft = (profile != 'zenn')
 
-# ---- 分量（Zenn記事のみ。記事規約の値） ----
+# ---- 分量（Zenn記事のみ。記事規約の値。2026-09-16 に2段の上限と学び系を追加） ----
 if profile == 'zenn':
+    fm = re.match(r'^---\n(.*?)\n---\n', text, flags=re.S)
+    m = re.search(r'^article_type:\s*(\S+)', fm.group(1), flags=re.M) if fm else None
+    article_type = m.group(1).strip('"\'') if m else 'experiment'
     chars = len(re.sub(r'\s', '', prose_only))
     tables = len([l for l in table_lines if re.match(r'^\|[\s:|-]+\|$', l.strip())])
     h2 = len(re.findall(r'^## ', body, flags=re.M))
-    print('[分量]')
-    check('本文文字数(空白・表・コード除く)', chars, 2500)
-    check('表', tables, 2)
-    check('コードブロック', codes := len(code_blocks), 3)
-    check('H2見出し', h2, 7)
+    print(f'[分量] 型: {article_type}（frontmatter article_type。無ければ experiment）')
+    if article_type == 'learning':
+        check_band('本文文字数(空白・表・コード除く)', chars, 1200, 1500, '学び系は3点に絞る')
+        check('表', tables, 1)
+        check('コードブロック', len(code_blocks), 1)
+        check('H2見出し', h2, 4)
+    else:
+        check_band('本文文字数(空白・表・コード除く)', chars, 2500, 3000, '分割して連載にするか検討')
+        check('表', tables, 2)
+        check('コードブロック', len(code_blocks), 3)
+        check('H2見出し', h2, 7)
     print('')
 
 # ---- 表記の癖（2026-08-13 Qiita記事 minorun365 から取り込み） ----
@@ -133,15 +159,22 @@ if profile != 'resume':
         maxrun = max(maxrun, run)
     check('体言止めの連続', maxrun, 2, '3行以上続いたら文にする', soft)
 
-sys.exit(1 if fail else 0)
+sys.exit(1 if fail else (3 if warn else 0))
 EOF
-if [ $? -ne 0 ]; then
+rc=$?
+if [ $rc -eq 1 ]; then
   FAIL=1
+elif [ $rc -eq 3 ]; then
+  WARN=1
 fi
 
 echo ""
 if [ $FAIL -ne 0 ]; then
   echo "RESULT: FAIL（上のOVER/エラーを解消してから公開・提出へ）"
   exit 1
+fi
+if [ "$WARN" -ne 0 ]; then
+  echo "RESULT: WARN（公開可。目安超え。OVER が1つでもあれば FAIL）"
+  exit 0
 fi
 echo "RESULT: PASS"
