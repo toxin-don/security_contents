@@ -61,6 +61,8 @@ text = open(path).read()
 
 # frontmatterを除去
 body = re.sub(r'^---\n.*?\n---\n', '', text, count=1, flags=re.S)
+# HTML コメントは Zenn に表示されないので分量に数えない（レビュー用の印に使う。2026-09-16）
+body = re.sub(r'<!--.*?-->', '', body, flags=re.S)
 # コードブロックを分離
 code_blocks = re.findall(r'```.*?```', body, flags=re.S)
 prose = re.sub(r'```.*?```', '', body, flags=re.S)
